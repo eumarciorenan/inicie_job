@@ -1,0 +1,42 @@
+###############################################################################
+#                          Generated on phpdocker.io                          #
+###############################################################################
+version: '3.1'
+services:
+    mysql:
+        image: 'mysql:5.7'
+        working_dir: /application
+        volumes:
+            - '.:/application'
+        environment:
+            - MYSQL_ROOT_PASSWORD=123456789
+            - MYSQL_DATABASE=inicie
+            - MYSQL_USER=user
+            - MYSQL_PASSWORD=123456789
+        ports:
+            - '8001:3306'
+
+    webserver:
+        image: 'nginx:alpine'
+        working_dir: /application
+        volumes:
+            - '.:/application'
+            - './phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf'
+        ports:
+            - '8000:80'
+
+    php-fpm:
+        build: phpdocker/php-fpm
+        working_dir: /application
+        volumes:
+            - '.:/application'
+            - './phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini'
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:latest
+        links:
+            - mysql
+        ports:
+            - 9000:80
+        environment:
+            - PMA_ARBITRARY=1
+            - UPLOAD_LIMIT=2000M
