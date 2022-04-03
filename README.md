@@ -37,7 +37,7 @@ Edite o "docker-compose", com as informações de banco de dados desejado para d
 
 ## COMMAND GIT  ##
 ## or create a new repository on the command line  ##
-1 - echo "# SEICMR" >> README.md
+1 - echo "#INICIE" >> README.md
 2 - git init
 3 - git add README.md
 4 - git commit -m "first commit"
